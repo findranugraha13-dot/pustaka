@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>PustakaDigital - Dashboard Pengunjung</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style-custom.css">
+    <style>
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#F7F9FB] text-slate-800 min-h-screen pb-24">
+
+    <header class="bg-[#002045] fixed top-0 w-full z-50 shadow-md flex justify-between items-center px-6 h-16">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-white">menu</span>
+            <h1 class="text-xl font-extrabold text-white tracking-tight">PustakaDigital</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full border border-white/10 relative group">
+                <label for="upload-avatar-pengunjung" class="w-7 h-7 rounded-full bg-teal-200 flex items-center justify-center overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+                    <img id="user-avatar-pic" alt="User Profile" class="w-full h-full object-cover" src="" onerror="this.style.display='none';document.getElementById('avatar-placeholder').style.display='flex';" onload="if(this.src && !this.src.endsWith('/')) { this.style.display='block'; document.getElementById('avatar-placeholder').style.display='none'; }"/>
+                    <div id="avatar-placeholder" class="w-full h-full bg-white flex items-center justify-center" style="display:flex;">
+                        <span class="material-symbols-outlined text-slate-300 text-2xl">person</span>
+                    </div>
+                </label>
+                <input type="file" id="upload-avatar-pengunjung" accept="image/*" class="hidden" onchange="gantiFotoProfilPengunjung(this)"/>
+                <span id="nama-pengunjung-aktif" class="text-white font-semibold text-sm hidden md:block">Memuat...</span>
+            </div>
+            <button onclick="logoutPengunjung()" class="text-xs bg-red-600/80 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg font-bold transition-all">Keluar</button>
+        </div>
+    </header>
+
+    <main class="mt-20 max-w-[1200px] mx-auto px-4 space-y-8">
+        
+        <section class="space-y-3 pt-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-[#002045]">Kategori Buku</h3>
+                <button onclick="filterKategoriBuku('Semua')" class="text-teal-600 text-sm font-semibold hover:underline cursor-pointer">Lihat Semua</button>
+            </div>
+            <div id="filter-kategori-pengunjung" class="flex overflow-x-auto gap-3 pb-2 scrollbar-none">
+                </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-[#002045]">Katalog Koleksi Buku</h3>
+            </div>
+            <div id="grid-katalog-buku" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+                </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-[#002045]">Status Pinjaman Aktif</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl border border-slate-200 p-4 flex gap-4 shadow-sm">
+                    <div class="w-20 h-28 bg-teal-800 rounded-lg flex-shrink-0 flex items-center justify-center text-white p-2 text-center font-bold text-xs shadow">
+                        Pustaka Digital
+                    </div>
+                    <div class="flex flex-col justify-between py-1">
+                        <div>
+                            <span class="text-teal-600 font-bold text-[10px] uppercase tracking-wider">Tips Membaca</span>
+                            <h4 class="font-bold text-slate-900 text-sm mt-0.5">Budayakan Membaca 15 Menit/Hari</h4>
+                            <p class="text-xs text-slate-500 mt-1">Membaca dapat meningkatkan konsentrasi dan memperluas wawasan Anda.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col justify-between">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm text-amber-500">bookmark</span> Daftar Buku Terpinjam Anda (Real-Time)
+                    </span>
+                    <div id="log-pinjaman-pengunjung" class="space-y-2 flex-grow overflow-y-auto max-h-40 pr-1">
+                        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-white border-t border-slate-200 shadow-xl py-2 rounded-t-xl">
+    <a href="dashboard-pengunjung.html" class="flex flex-col items-center justify-center text-teal-600 rounded-xl px-6 py-1.5 transition-all">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span class="text-[11px] font-bold mt-0.5">Semua</span>
+    </a>
+
+    <a href="katalog.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 px-6 py-1.5 transition-all">
+        <span class="material-symbols-outlined">book_5</span>
+        <span class="text-[11px] font-semibold mt-0.5">Katalog</span>
+    </a>
+
+    <button onclick="bukaModalProfil()" class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 px-6 py-1.5 transition-all">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[11px] font-semibold mt-0.5">Profil</span>
+    </button>
+</nav>
+
+    <script src="app-core.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initDashboardPengunjung();
+        });
+    </script>
+</body>
+</html>

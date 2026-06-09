@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Login - PustakaDigital</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style-custom.css">
+    <style>
+        body {
+            background-color: #F7F9FB;
+            background-image: radial-gradient(#d1d5db 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .quote-box {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            max-width: 400px;
+            color: #475569;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-[#F7F9FB]">
+
+    <div class="quote-box hidden lg:block">
+        <span class="text-6xl text-teal-600/20 font-serif">"</span>
+        <p class="text-lg font-medium italic -mt-6">
+            "Perpustakaan adalah rumah bagi semua imajinasi, pintu bagi setiap kemungkinan, dan tempat di mana setiap pencarian akan menemukan jawabannya."
+        </p>
+        <p class="mt-4 font-bold text-sm tracking-widest text-[#002045]">— PUSTAKA DIGITAL</p>
+    </div>
+
+    <main class="flex-grow flex items-center justify-center px-4 py-12 relative overflow-hidden">
+        <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-blue-950/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-80 h-80 bg-teal-600/5 rounded-full blur-3xl"></div>
+        <div class="w-full max-w-md z-10">
+            <div class="flex flex-col items-center mb-6">
+                <div class="w-16 h-16 bg-[#002045] rounded-xl flex items-center justify-center mb-2 shadow-lg">
+                    <span class="material-symbols-outlined text-white text-[32px]">local_library</span>
+                </div>
+                <h1 class="text-xl font-bold text-[#002045]">PustakaDigital</h1>
+            </div>
+            <div class="login-card bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button id="tab-pengunjung" onclick="switchLoginRole('pengunjung')" class="flex-1 py-4 text-sm font-bold text-[#002045] border-b-2 border-[#002045] bg-white transition-all focus:outline-none">Pengunjung</button>
+                    <button id="tab-petugas" onclick="switchLoginRole('petugas')" class="flex-1 py-4 text-sm font-semibold text-slate-500 hover:text-[#002045] hover:bg-slate-100 transition-all text-center focus:outline-none">Petugas</button>
+                </div>
+                <div class="p-8">
+                    <div class="text-center mb-6">
+                        <h2 id="login-title" class="fade-text text-xl font-bold text-slate-900 transition-opacity duration-300">Masuk sebagai Pengunjung</h2>
+                        <p id="login-subtitle" class="fade-text text-slate-500 transition-opacity duration-300">Akses koleksi buku digital Anda sekarang</p>
+                    </div>
+                    <form class="space-y-4" id="formAuthLogin" onsubmit="handleLogin(event)">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">mail</span><input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="email" type="email" placeholder="contoh@email.com" required/></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-sm font-semibold text-slate-700">Password</label>
+                                <button type="button" onclick="bukaModalLupaPassword()" class="text-xs font-semibold text-teal-600 hover:underline">Lupa Password?</button>
+                            </div>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">lock</span><input class="w-full pl-10 pr-12 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="password" type="password" placeholder="••••••••" required/><button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 flex items-center" onclick="togglePasswordVisibility()" type="button"><span class="material-symbols-outlined" id="passwordIcon">visibility</span></button></div>
+                        </div>
+                        <button id="btn-submit-login" class="w-full bg-[#002045] hover:opacity-90 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.99]" type="submit">
+                            <span>Masuk ke Akun</span><span class="material-symbols-outlined text-[20px]">login</span>
+                        </button>
+                    </form>
+                    <div class="mt-6 pt-4 border-t border-slate-200 text-center"><p class="text-sm text-slate-500">Belum punya akun? <a class="text-teal-600 font-bold hover:underline ml-1" href="registrasi.html">Daftar sekarang</a></p></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full py-4 px-6 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-400">© 2026 PustakaDigital. Hak Cipta Dilindungi.</footer>
+
+    <!-- MODAL LUPA PASSWORD -->
+    <div id="modal-lupa-password" class="fixed inset-0 bg-black/60 z-[200] flex items-center justify-center hidden px-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-7 shadow-2xl">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-base font-bold text-[#002045] flex items-center gap-2">
+                    <span class="material-symbols-outlined text-teal-600">lock_reset</span> Reset Password
+                </h3>
+                <button onclick="closeModal('modal-lupa-password')" class="material-symbols-outlined text-slate-400 hover:text-slate-700">close</button>
+            </div>
+
+            <!-- Step 1: Masukkan Email -->
+            <div id="lupa-step-1">
+                <p class="text-sm text-slate-500 mb-4">Masukkan email akun Anda untuk melanjutkan reset password.</p>
+                <div class="mb-3">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">Role Akun</label>
+                    <div class="flex gap-3">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                            <input type="radio" name="lupa-role" value="pengunjung" checked class="accent-teal-600"/> Pengunjung
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                            <input type="radio" name="lupa-role" value="petugas" class="accent-teal-600"/> Petugas
+                        </label>
+                    </div>
+                </div>
+                <div class="relative mb-4">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">mail</span>
+                    <input type="email" id="lupa-email" placeholder="Email terdaftar Anda" class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:border-teal-400"/>
+                </div>
+                <button onclick="prosesCariEmail()" class="w-full bg-[#002045] text-white font-bold py-2.5 rounded-lg text-sm hover:opacity-90 transition-all">Lanjutkan</button>
+            </div>
+
+            <!-- Step 2: Buat Password Baru -->
+            <div id="lupa-step-2" class="hidden">
+                <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 mb-4 text-xs text-teal-700">
+                    ✓ Email ditemukan: <strong id="info-email-konfirmasi"></strong>
+                </div>
+                <div class="space-y-3 mb-4">
+                    <input type="password" id="lupa-password-baru" placeholder="Password Baru" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-teal-400 bg-slate-50"/>
+                    <input type="password" id="lupa-konfirmasi-password" placeholder="Konfirmasi Password Baru" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-teal-400 bg-slate-50"/>
+                </div>
+                <button onclick="prosesResetPassword()" class="w-full bg-teal-600 text-white font-bold py-2.5 rounded-lg text-sm hover:opacity-90 transition-all">Simpan Password Baru</button>
+            </div>
+
+            <!-- Step 3: Berhasil -->
+            <div id="lupa-step-3" class="hidden text-center py-4">
+                <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="material-symbols-outlined text-green-600 text-3xl">check_circle</span>
+                </div>
+                <h4 class="font-bold text-slate-900 mb-1">Password Berhasil Direset!</h4>
+                <p class="text-sm text-slate-500 mb-4">Silakan login menggunakan password baru Anda.</p>
+                <button onclick="closeModal('modal-lupa-password')" class="bg-[#002045] text-white font-bold px-6 py-2.5 rounded-lg text-sm hover:opacity-90 transition-all">Kembali ke Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-core.js"></script>
+</body>
+</html>

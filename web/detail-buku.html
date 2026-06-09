@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Buku - PustakaDigital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,1&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 px-6 h-16 flex items-center border-b border-slate-200">
+        <a href="katalog.html" class="material-symbols-outlined mr-4 hover:bg-slate-100 p-2 rounded-full">arrow_back</a>
+        <h1 class="font-bold text-lg">Detail Koleksi</h1>
+    </header>
+
+    <main class="pt-24 pb-32 px-4 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
+        
+        <div class="md:col-span-4 lg:col-span-3">
+            <div id="detail-cover" class="aspect-[3/4] bg-slate-200 rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+                </div>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+                <div class="bg-white p-3 rounded-xl border text-center shadow-sm">
+                    <span class="material-symbols-outlined text-teal-600">star</span>
+                    <p class="text-xs font-bold">4.8</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl border text-center shadow-sm">
+                    <span class="material-symbols-outlined text-blue-600">menu_book</span>
+                    <p id="detail-halaman" class="text-xs font-bold">-</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl border text-center shadow-sm">
+                    <span class="material-symbols-outlined text-orange-600">language</span>
+                    <p class="text-xs font-bold">IDN</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-8 lg:col-span-9 space-y-6">
+            <div>
+                <h2 id="detail-judul" class="text-3xl font-extrabold text-[#002045] leading-tight mb-2">Memuat...</h2>
+                <p id="detail-penulis" class="text-lg font-medium text-slate-600"></p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-teal-600">description</span> Sinopsis
+                </h3>
+                <p id="detail-sinopsis" class="text-slate-600 leading-relaxed"></p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-xl border shadow-sm">
+                    <p class="text-[10px] uppercase font-bold text-slate-400">Penerbit</p>
+                    <p id="detail-penerbit" class="font-semibold text-sm">-</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border shadow-sm">
+                    <p class="text-[10px] uppercase font-bold text-slate-400">Lokasi Rak</p>
+                    <p id="detail-lokasi" class="font-semibold text-sm text-teal-700">-</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 w-full bg-white p-4 border-t flex gap-4 max-w-5xl mx-auto md:left-1/2 md:-translate-x-1/2 rounded-t-2xl">
+        <button id="btn-pinjam" class="flex-1 bg-[#002045] text-white py-4 rounded-xl font-bold hover:bg-slate-900 transition-all">Pinjam Sekarang</button>
+    </footer>
+
+    <script src="app-core.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const idBuku = localStorage.getItem('bukuTerpilih');
+            const koleksi = JSON.parse(localStorage.getItem('koleksiBuku'));
+            const b = koleksi.find(x => x.id === idBuku);
+
+            if (b) {
+                document.getElementById('detail-cover').innerHTML = `<img src="${b.sampul}" class="w-full h-full object-cover">`;
+                document.getElementById('detail-judul').innerText = b.judul;
+                document.getElementById('detail-penulis').innerText = b.penulis;
+                document.getElementById('detail-sinopsis').innerText = b.sinopsis || "Belum ada sinopsis.";
+                document.getElementById('detail-penerbit').innerText = b.penerbit || "-";
+                document.getElementById('detail-lokasi').innerText = b.lokasi || "-";
+                document.getElementById('detail-halaman').innerText = b.halaman || "-";
+                
+                document.getElementById('btn-pinjam').onclick = () => {
+                    pinjamBukuOtomatis(b.id);
+                    toastNotify("Berhasil dipinjam!");
+                };
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Registrasi - PustakaDigital</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style-custom.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-[#F7F9FB]">
+    <main class="flex-grow flex items-center justify-center px-4 py-12 relative overflow-hidden">
+        <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-blue-950/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-80 h-80 bg-teal-600/5 rounded-full blur-3xl"></div>
+        <div class="w-full max-w-md z-10">
+            <div class="flex flex-col items-center mb-6">
+                <div class="w-16 h-16 bg-[#006a63] rounded-xl flex items-center justify-center mb-2 shadow-lg">
+                    <span class="material-symbols-outlined text-white text-[32px]">person_add</span>
+                </div>
+                <h1 class="text-xl font-bold text-[#006a63]">PustakaDigital</h1>
+            </div>
+            <div class="login-card bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button id="reg-tab-pengunjung" onclick="switchRegisterRole('pengunjung')" class="flex-1 py-4 text-sm font-bold text-[#006a63] border-b-2 border-[#006a63] bg-white transition-all focus:outline-none">Daftar Pengunjung</button>
+                    <button id="reg-tab-petugas" onclick="switchRegisterRole('petugas')" class="flex-1 py-4 text-sm font-semibold text-slate-500 hover:text-[#006a63] hover:bg-slate-100 transition-all text-center focus:outline-none">Daftar Petugas</button>
+                </div>
+                <div class="p-8">
+                    <form class="space-y-4" id="formAuthRegister" onsubmit="handleRegister(event)">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">person</span><input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="reg-nama" type="text" placeholder="Nama lengkap Anda" required/></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">mail</span><input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="reg-email" type="email" placeholder="contoh@email.com" required/></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">lock</span><input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="reg-password" type="password" placeholder="••••••••" required/></div>
+                        </div>
+                        <div id="wrapper-auth-code" class="hidden">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Kode Otorisasi Admin</label>
+                            <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">key</span><input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm" id="reg-auth-code" type="text" placeholder="Masukkan kode otorisasi admin"/>
+                            <p class="text-[10px] text-slate-400 mt-1">* Hubungi admin untuk mendapatkan kode otorisasi</p></div>
+                        </div>
+                        <button type="submit" id="btn-submit-register" class="w-full bg-[#006a63] hover:opacity-90 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.99]">
+                            <span>Buat Akun Baru & Masuk</span><span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+                        </button>
+                    </form>
+                    <div class="mt-6 pt-4 border-t border-slate-200 text-center"><p class="text-sm text-slate-500">Sudah memiliki akun? <a class="text-teal-600 font-bold hover:underline ml-1" href="login.html">Masuk di sini</a></p></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="mt-12 text-center max-w-lg mx-auto opacity-70">
+    <p class="text-lg italic font-medium text-slate-700">
+        "Perpustakaan adalah rumah bagi semua imajinasi, pintu bagi setiap kemungkinan, dan tempat di mana setiap pencarian akan menemukan jawabannya."
+    </p>
+    <p class="mt-2 text-sm font-bold text-teal-800 tracking-widest uppercase">— PustakaDigital Community</p>
+</div>
+    <footer class="w-full py-4 px-6 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-400">© 2026 PustakaDigital. Hak Cipta Dilindungi.</footer>
+    <script src="app-core.js"></script>
+</body>
+</html>

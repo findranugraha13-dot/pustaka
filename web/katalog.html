@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Katalog Buku - PustakaDigital</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style-custom.css">
+</head>
+<body class="bg-[#F7F9FB] min-h-screen pb-24">
+
+    <header class="bg-[#002045] fixed top-0 w-full z-50 shadow-md px-6 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <a href="dashboard-pengunjung.html" class="material-symbols-outlined text-white">arrow_back</a>
+            <h1 class="text-lg font-bold text-white">Katalog Koleksi</h1>
+        </div>
+        <div class="flex items-center gap-4">
+             <span class="material-symbols-outlined text-white">search</span>
+        </div>
+    </header>
+
+    <main class="mt-20 max-w-[1200px] mx-auto px-4 space-y-6">
+    <div class="relative w-full">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+        <input type="text" id="input-pencarian-katalog" onkeyup="cariBuku()" 
+               placeholder="Cari judul buku atau penulis..." 
+               class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all"/>
+    </div>
+    
+    <div id="filter-katalog-page" class="flex overflow-x-auto gap-3 pb-2 scrollbar-none"></div>
+
+    <div id="grid-katalog-buku" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"></div>
+</main>
+
+    <main class="mt-20 max-w-[1200px] mx-auto px-4 space-y-6">
+        <div id="filter-katalog-page" class="flex overflow-x-auto gap-3 pb-2 scrollbar-none">
+            </div>
+
+        <div id="grid-katalog-buku" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            </div>
+    </main>
+
+    <script src="app-core.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render kategori dan buku saat halaman katalog dibuka
+            renderKategoriPengunjung(); 
+            renderKatalogPengunjungGrid();
+        });
+    </script>
+</body>
+</html>
